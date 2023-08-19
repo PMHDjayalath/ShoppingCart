@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./css/styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://kit.fontawesome.com/b1c1380a86.js" crossorigin="anonymous"></script>
+    <title>ShoeMart</title>      
+	
+  </head>
+  <body>
+	<div class="shadow-lg p-3 mb-5 bg-body rounded">
+		<div class="row">
+			<div class="col">
+				<b>ShoeMart Admin Dashboard</b>
+			</div>
+			<div class="col text-end">
+				<label onclick="showDashboard()" style="cursor : pointer;"><i class="fa fa-line-chart"></i>&nbsp Dashboard</label>
+				&nbsp|&nbsp
+				<label onclick="showOrders()" style="cursor : pointer;"><i class="fa fa-newspaper-o"></i>&nbsp Orders</label>
+				&nbsp|&nbsp
+				<label onclick="logOut()" style="cursor : pointer;"><i class="fas fa-user" ></i>&nbsp Logout</label>
+			</div>
+		</div>
+	</div>
+	<div class="row  mx-4 my-2" style="margin-top : 1%;">
+		<div class="col">
+			<h6 class="text=secondary">ShoeMart > Inventory</h6>
+		</div>
+		<div class="col text-end">
+			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addItem"><i class="fas fa-plus-circle"></i> Add New Item</button>
+		</div>
+	</div>
+	<table class="table table-bordered border-dark mx-auto my-4" style="width : 95%;">
+	  <thead style="background-color : #FFFFE0">
+		<tr>
+		  <th scope="col">ID</th>
+		  <th scope="col">Name and Image of the Item</th>
+		  <th scope="col">Unit Price</th>
+		  <th scope="col"></th>
+		</tr>
+	  </thead>
+	  <tbody id="tblBody">
+		
+	  </tbody>
+	</table>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="addItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Add new item to the inventory</h5>
+		  </div>
+		  <div class="modal-body">
+			  <div class="mb-3">
+				<label for="exampleInputEmail1" class="form-label">Item Code</label>
+				<input type="text" class="form-control" id="itemCode" aria-describedby="emailHelp">
+			  </div>
+			  <div class="mb-3">
+				<label for="exampleInputEmail1" class="form-label">Item Name</label>
+				<input type="text" class="form-control" id="itemName" aria-describedby="emailHelp">
+			  </div>
+			  <div class="mb-3">
+				<label for="exampleInputPassword1" class="form-label">Image</label>
+				<input type="number" class="form-control" id="img">
+			  </div>
+			  <div class="mb-3">
+				<label for="exampleInputPassword1" class="form-label">Unit Price (LKR)</label>
+				<input type="number" class="form-control" id="unitPrice">
+			  </div>
+			  <span class="badge rounded-pill bg-warning text-dark"></span>
+			  <div class="alert alert-warning alert-dismissible fade show" id="wrning" role="alert" style="display : none;">
+				<strong>Sorry!</strong> Item Code Already Exist.
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			  </div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-success" onclick="addToInventory()">Add Item</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<!-- Modal -->
+<div class="modal fade" id="deleteConfirmationDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete this product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure want to delete this...?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" onclick="deleteCofirmed()">Yes,Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="updateDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		<div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">Item Code</label>
+			<input type="text" class="form-control" id="itemCodeU" aria-describedby="emailHelp" disabled>
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">Item Name</label>
+			<input type="text" class="form-control" id="itemNameU" aria-describedby="emailHelp">
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputPassword1" class="form-label">Image</label>
+			<input type="text" class="form-control" id="imgU">
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputPassword1" class="form-label">Unit Price (LKR)</label>
+			<input type="number" class="form-control" id="unitPriceU">
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" onclick="updateCofirmed()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+		<div class="customization_popup" role="alert">
+			<div class="customization_popup_container">
+				
+				<div class="">
+      <div class="modal-header bg-white">
+        <h6 class="">Chat</h6>
+        <a href="#0" class="customization_popup_close img-replace">X</a>
+      </div>
+      <div class="modal-body">
+		  <div class="Content" id="msgBox">
+			
+		  </div>
+      </div>
+      <div class="" style=" border-top : 1px solid #E8E8E8;">
+        <div class="row mx-1 my-3">
+			<div class="col-10">
+				 <input type="text" class="form-control" id="msgText" aria-describedby="emailHelp">
+			</div>
+			<div class="col-1">
+				<button type="button" class="btn btn-success rounded-circle" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+			</div>
+		</div>
+      </div>
+    </div>
+			</div> 
+			 
+		</div>
+		
+		
+<div class="modal fade" id="loadingModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+     
+      <div class="modal-body">
+		<div class="row">
+			<div class="col-2">
+				<div class="spinner-border text-primary" role="status">
+				  <span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+			<div class="col-10">
+				<h6 class="my-2">Please Wait...</h6>
+			</div>
+		</div>
+		
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+	<script src="./js/main.js"></script>
+  </body>
+</html>
+	

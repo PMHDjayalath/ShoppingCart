@@ -1,0 +1,84 @@
+.leftingItemsTop {
+	margin-left : -1%;
+	margin-right : 1%;
+}
+.leftingItemsBody {
+	margin-left : -1%;
+}
+
+.rightingItems {
+	margin-right : -1%;
+}
+
+.headerSection {
+	margin-top : 0.5%;
+}
+
+.bodySection {
+	min-height : 93vh;
+}
+
+.ulList {
+	padding : 0;
+	border : none;
+	margin-left : -3%;
+	margin-right : -3%;
+	margin-top : -5%;
+}
+
+.bg-top {
+	background-color : #D9EA0C;
+}
+
+.bg-side {
+	background-color : #322e2f;
+}
+
+.buttonGrp {
+	margin-top : 2%;
+}
+
+.linkCursor {
+	cursor : pointer;
+	text-decoration : none;
+	color : white;
+}
+
+.actv {
+	color : red;
+	border-bottom : 1px solid red;
+}
+
+.notActive {
+	color : white;
+}
+
+.linkCursor:hover {
+	color : gray;
+}
+
+.tblRow:hover {
+	background-color : #EFEFEF;
+	color : black;
+	cursor : pointer;
+}
+
+.active {
+	background-color : green;
+}
+
+.cancelled {
+	background-color : red;
+}
+
+.crsr:hover { 
+	cursor : pointer;
+}
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  justify-content: center;
+}
